@@ -40,7 +40,7 @@ async function init() {
           <div class="col-12">
             <div class="card shadow-sm">
               <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start gap-3">
+                <div class="d-flex justify-content-between align-items-center gap-3">
                   <div class="flex-grow-1">
                     <h5 class="card-title mb-2">${escapeHtml(m.title)}</h5>
                     <div class="text-secondary small mb-2">
@@ -54,18 +54,18 @@ async function init() {
                     <span class="badge ${hasTopic ? "text-bg-primary" : "text-bg-secondary"}">
                       ${hasTopic ? "有主题讨论" : "暂无主题讨论"}
                     </span>
+                    ${
+                      hasTopic
+                        ? `<div class="mt-2">
+                            <a class="btn btn-success btn-sm" href="submit-reflection.html?meeting_id=${encodeURIComponent(
+                              m.id
+                            )}">提交心得</a>
+                          </div>`
+                        : ""
+                    }
                   </div>
                   <div class="text-end">
-                    <div class="d-grid gap-2">
-                      <a class="btn btn-outline-primary" href="detail.html?id=${encodeURIComponent(m.id)}">查看详情</a>
-                      ${
-                        hasTopic
-                          ? `<a class="btn btn-success" href="submit-reflection.html?meeting_id=${encodeURIComponent(
-                              m.id
-                            )}">提交心得</a>`
-                          : ""
-                      }
-                    </div>
+                    <a class="btn btn-outline-primary" href="detail.html?id=${encodeURIComponent(m.id)}">查看详情</a>
                   </div>
                 </div>
               </div>
