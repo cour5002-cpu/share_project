@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>提交分享会资料</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid app-container">
+        <a class="navbar-brand" href="index.html">分享会资料</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="navbar-nav">
+            <a class="nav-link" href="index.html">首页</a>
+            <a class="nav-link active" aria-current="page" href="submit-resource.html">提交分享会资料</a>
+            <a class="nav-link" href="submit-reflection.html">提交心得</a>
+            <a class="nav-link" href="teacher-review.html">指导老师入口</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container app-container py-4">
+      <h1 class="h4 mb-3">提交分享会资料</h1>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <form id="meetingForm" class="needs-validation" novalidate>
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label">分享会标题（必填）</label>
+                <input class="form-control" name="title" required />
+                <div class="invalid-feedback">请填写分享会标题。</div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label">主讲人（必填）</label>
+                <input class="form-control" name="speaker" required />
+                <div class="invalid-feedback">请填写主讲人。</div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label">主讲人身份</label>
+                <input class="form-control" name="speaker_role" placeholder="例如：指导老师 / 班长 / 主讲人" />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label">分享时间（必填）</label>
+                <input class="form-control" name="date" type="date" required />
+                <div class="invalid-feedback">请选择分享时间。</div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label">提交人</label>
+                <input class="form-control" name="submitter" />
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">一句话简介</label>
+                <textarea class="form-control" name="description" rows="2"></textarea>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label">录屏链接</label>
+                <input class="form-control" name="video_url" placeholder="外部链接，例如网盘/腾讯会议云录制" />
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label">PPT/PDF 链接</label>
+                <input class="form-control" name="ppt_url" placeholder="外部链接，例如网盘/腾讯文档" />
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">主题讨论题目（可选）</label>
+                <input class="form-control" name="discussion_topic" placeholder="如果没有主题讨论请留空" />
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">备注</label>
+                <textarea class="form-control" name="remark" rows="2"></textarea>
+              </div>
+
+              <div class="col-12 d-flex gap-2">
+                <button id="submitBtn" class="btn btn-primary" type="submit">提交</button>
+                <a class="btn btn-outline-secondary" href="index.html">返回首页</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal fade" id="appModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="appModalTitle">提示</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="appModalBody"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">知道了</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="js/submit-resource.js"></script>
+  </body>
+</html>

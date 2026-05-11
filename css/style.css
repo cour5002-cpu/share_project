@@ -1,0 +1,35 @@
+:root {
+  --app-max-width: 980px;
+}
+
+body {
+  background: #f8f9fa;
+}
+
+.app-container {
+  max-width: var(--app-max-width);
+}
+
+.card-title {
+  line-height: 1.3;
+}
+
+.link-btns .btn {
+  min-width: 10rem;
+}
+
+.kv-label {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.kv-value {
+  white-space: pre-wrap;
+}
+
+.reflection-item {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.075);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
