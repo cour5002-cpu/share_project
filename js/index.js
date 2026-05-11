@@ -56,7 +56,16 @@ async function init() {
                     </span>
                   </div>
                   <div class="text-end">
-                    <a class="btn btn-outline-primary" href="detail.html?id=${encodeURIComponent(m.id)}">查看详情</a>
+                    <div class="d-grid gap-2">
+                      <a class="btn btn-outline-primary" href="detail.html?id=${encodeURIComponent(m.id)}">查看详情</a>
+                      ${
+                        hasTopic
+                          ? `<a class="btn btn-success" href="submit-reflection.html?meeting_id=${encodeURIComponent(
+                              m.id
+                            )}">提交心得</a>`
+                          : ""
+                      }
+                    </div>
                   </div>
                 </div>
               </div>

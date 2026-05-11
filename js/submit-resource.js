@@ -1,3 +1,4 @@
+import { TEACHER_REVIEW_CODE } from "./config.js";
 import { createMeeting } from "./api.js";
 
 function showModal(title, message) {
@@ -30,8 +31,32 @@ function getFormData(form) {
 }
 
 async function init() {
+  const gateEl = document.getElementById("gate");
+  const appEl = document.getElementById("app");
+  const codeInput = document.getElementById("code");
+  const enterBtn = document.getElementById("enterBtn");
+
   const form = document.getElementById("meetingForm");
   const submitBtn = document.getElementById("submitBtn");
+
+  gateEl.classList.remove("d-none");
+  appEl.classList.add("d-none");
+
+  enterBtn.addEventListener("click", () => {
+    const v = String(codeInput.value || "").trim();
+    if (!TEACHER_REVIEW_CODE) {
+      showModal("未配置", "请在 js/config.js 中设置 TEACHER_REVIEW_CODE。");
+      return;
+    }
+
+    if (v !== TEACHER_REVIEW_CODE) {
+      showModal("口令错误", "请重新输入。");
+      return;
+    }
+
+    gateEl.classList.add("d-none");
+    appEl.classList.remove("d-none");
+  });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
