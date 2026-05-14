@@ -20,6 +20,20 @@ export async function getPublishedMeetings() {
   return data ?? [];
 }
 
+export async function getDiscussionMeetings() {
+  const supabase = getClient();
+  const { data, error } = await supabase
+    .from("meetings")
+    .select("*")
+    .eq("status", "published")
+    .not("discussion_topic", "is", null)
+    .neq("discussion_topic", "")
+    .order("date", { ascending: false });
+
+  if (error) throw error;
+  return data ?? [];
+}
+
 export async function getMeetingById(id) {
   const supabase = getClient();
   const { data, error } = await supabase
@@ -53,14 +67,14 @@ export async function createMeeting(meeting) {
   return data;
 }
 
-export async function getSelectedReflectionsByMeetingId(meetingId) {
+export async function getPublicReflectionsByMeetingId(meetingId) {
   const supabase = getClient();
   const { data, error } = await supabase
     .from("reflections")
     .select("*")
     .eq("meeting_id", meetingId)
-    .eq("status", "selected")
-    .order("created_at", { ascending: false });
+    .neq("status", "hidden")
+    .order("created_at", { ascending: true });
 
   if (error) throw error;
   return data ?? [];
@@ -75,7 +89,7 @@ export async function createReflection(reflection) {
     content: reflection.content,
     gain: reflection.gain ?? null,
     question: reflection.question ?? null,
-    status: "pending",
+    status: "public",
   };
 
   const { data, error } = await supabase.from("reflections").insert(payload).select("*").single();

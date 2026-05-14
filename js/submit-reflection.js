@@ -36,6 +36,10 @@ function getFormData(form, meetingId) {
   };
 }
 
+function normalizeTitle(title) {
+  return String(title ?? "").replaceAll("(新)", "").replaceAll("（新）", "").trim();
+}
+
 async function init() {
   const meetingId = qs("meeting_id");
   const loadingEl = document.getElementById("loading");
@@ -61,7 +65,7 @@ async function init() {
       throw new Error("分享会不存在或已被删除");
     }
 
-    document.getElementById("meetingTitle").textContent = meeting.title;
+    document.getElementById("meetingTitle").textContent = normalizeTitle(meeting.title);
     document.getElementById("meetingTopic").textContent = meeting.discussion_topic || "";
 
     const topic = (meeting.discussion_topic || "").trim();
@@ -90,7 +94,7 @@ async function init() {
 
       try {
         await createReflection(payload);
-        showModal("提交成功", "提交成功，感谢你的参与。");
+        showModal("提交成功", "提交成功，你的心得已公开展示，其他同学现在就可以看到。");
         setStatus("提交成功", "alert-success");
         form.reset();
         form.classList.remove("was-validated");

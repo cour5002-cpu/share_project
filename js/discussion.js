@@ -1,13 +1,4 @@
-import { getPublishedMeetings } from "./api.js";
-
-function fmtDate(dateStr) {
-  if (!dateStr) return "";
-  return dateStr;
-}
-
-function normalizeTitle(title) {
-  return String(title ?? "").replaceAll("(新)", "").replaceAll("（新）", "").trim();
-}
+import { getDiscussionMeetings } from "./api.js";
 
 function escapeHtml(str) {
   return String(str ?? "")
@@ -18,8 +9,12 @@ function escapeHtml(str) {
     .replaceAll("'", "&#39;");
 }
 
+function normalizeTitle(title) {
+  return String(title ?? "").replaceAll("(新)", "").replaceAll("（新）", "").trim();
+}
+
 async function init() {
-  const listEl = document.getElementById("meetingList");
+  const listEl = document.getElementById("discussionList");
   const loadingEl = document.getElementById("loading");
   const errorEl = document.getElementById("error");
 
@@ -27,11 +22,11 @@ async function init() {
   errorEl.classList.add("d-none");
 
   try {
-    const meetings = await getPublishedMeetings();
+    const meetings = await getDiscussionMeetings();
     if (!meetings.length) {
       listEl.innerHTML = `
         <div class="alert alert-secondary" role="alert">
-          暂无已发布的分享会。
+          暂无可参与的心得讨论。
         </div>
       `;
       return;
@@ -39,7 +34,6 @@ async function init() {
 
     listEl.innerHTML = meetings
       .map((m) => {
-        const hasTopic = !!(m.discussion_topic && String(m.discussion_topic).trim());
         return `
           <div class="col-12">
             <div class="card shadow-sm">
@@ -52,26 +46,16 @@ async function init() {
                       <span class="mx-2">|</span>
                       <span>${escapeHtml(m.speaker_role || "")}</span>
                       <span class="mx-2">|</span>
-                      <span>${escapeHtml(fmtDate(m.date))}</span>
+                      <span>${escapeHtml(m.date)}</span>
                     </div>
                     <p class="card-text mb-2">${escapeHtml(m.description || "")}</p>
-                    <span class="badge ${hasTopic ? "text-bg-primary" : "text-bg-secondary"}">
-                      ${hasTopic ? "有主题讨论" : "暂无主题讨论"}
-                    </span>
-                    ${
-                      hasTopic
-                        ? `<div class="mt-2">
-                            <a class="btn btn-success btn-sm" href="submit-reflection.html?meeting_id=${encodeURIComponent(
-                              m.id
-                            )}">提交心得</a>
-                          </div>`
-                        : ""
-                    }
-                  </div>
-                  <div class="text-end">
-                    <a class="btn btn-outline-primary" href="resource-detail.html?id=${encodeURIComponent(
-                      m.id
-                    )}">查看详情</a>
+                    <div class="discussion-topic-preview">${escapeHtml(m.discussion_topic || "")}</div>
+                    <div class="discussion-actions mt-3">
+                      <a class="btn btn-outline-primary" href="detail.html?id=${encodeURIComponent(m.id)}">查看讨论</a>
+                      <a class="btn btn-success" href="submit-reflection.html?meeting_id=${encodeURIComponent(
+                        m.id
+                      )}">提交心得</a>
+                    </div>
                   </div>
                 </div>
               </div>

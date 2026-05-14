@@ -1,4 +1,4 @@
-import { getMeetingById, getSelectedReflectionsByMeetingId } from "./api.js";
+import { getMeetingById, getPublicReflectionsByMeetingId } from "./api.js";
 
 function qs(name) {
   return new URLSearchParams(location.search).get(name);
@@ -16,6 +16,23 @@ function escapeHtml(str) {
 function setText(id, text) {
   const el = document.getElementById(id);
   if (el) el.textContent = text ?? "";
+}
+
+function normalizeTitle(title) {
+  return String(title ?? "").replaceAll("(新)", "").replaceAll("（新）", "").trim();
+}
+
+function fmtDateTime(value) {
+  if (!value) return "";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return value;
+
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  const h = String(d.getHours()).padStart(2, "0");
+  const min = String(d.getMinutes()).padStart(2, "0");
+  return `${y}-${m}-${day} ${h}:${min}`;
 }
 
 async function init() {
@@ -41,7 +58,7 @@ async function init() {
       throw new Error("分享会不存在或已被删除");
     }
 
-    setText("title", meeting.title);
+    setText("title", normalizeTitle(meeting.title));
     setText("speaker", meeting.speaker);
     setText("speakerRole", meeting.speaker_role || "");
     setText("date", meeting.date);
@@ -82,10 +99,10 @@ async function init() {
     }
 
     const reflectionsEl = document.getElementById("reflections");
-    const reflections = await getSelectedReflectionsByMeetingId(meeting.id);
+    const reflections = await getPublicReflectionsByMeetingId(meeting.id);
 
     if (!reflections.length) {
-      reflectionsEl.innerHTML = `<div class="text-secondary">暂无精选观点。</div>`;
+      reflectionsEl.innerHTML = `<div class="text-secondary">暂时还没有同学提交心得。</div>`;
     } else {
       reflectionsEl.innerHTML = reflections
         .map((r) => {
@@ -93,6 +110,7 @@ async function init() {
             <div class="reflection-item mb-3">
               <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
                 <div class="fw-semibold">${escapeHtml(r.student_name)}（${escapeHtml(r.class_name)}）</div>
+                <div class="small text-secondary">提交时间：${escapeHtml(fmtDateTime(r.created_at))}</div>
               </div>
               <div class="mb-2">
                 <div class="kv-label">我的观点</div>

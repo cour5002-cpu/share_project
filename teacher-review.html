@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>指导老师审核精选</title>
+    <title>页面已停用</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
   </head>
@@ -25,57 +25,28 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <div class="navbar-nav">
             <a class="nav-link" href="index.html">首页</a>
-            <a class="nav-link active" aria-current="page" href="teacher-review.html">指导老师入口</a>
+            <a class="nav-link" href="discussion.html">心得讨论页</a>
+            <a class="nav-link" href="submit-resource.html">分享会资料提交页</a>
           </div>
         </div>
       </div>
     </nav>
 
     <main class="container app-container py-4">
-      <h1 class="h4 mb-3">指导老师审核精选</h1>
-
-      <div id="gate" class="card shadow-sm d-none">
+      <div class="card shadow-sm">
         <div class="card-body">
-          <div class="alert alert-warning" role="alert">
-            MVP 简化版口令
+          <h1 class="h4 mb-3">教师审核入口已取消</h1>
+          <div class="alert alert-info mb-3" role="alert">
+            当前版本中，学生提交的心得会直接公开展示，不再需要教师审核精选。
           </div>
-
-          <div class="row g-2 align-items-end">
-            <div class="col-12 col-md-6">
-              <label class="form-label">请输入口令</label>
-              <input id="code" class="form-control" type="password" placeholder="口令" />
-            </div>
-            <div class="col-12 col-md-auto">
-              <button id="enterBtn" class="btn btn-primary">进入审核</button>
-            </div>
+          <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-primary" href="discussion.html">前往心得讨论</a>
+            <a class="btn btn-outline-secondary" href="index.html">返回首页</a>
           </div>
         </div>
-      </div>
-
-      <div id="app" class="d-none">
-        <div id="loading" class="alert alert-secondary d-none" role="alert">加载中...</div>
-        <div id="empty" class="alert alert-secondary d-none" role="alert">暂无待审核心得。</div>
-
-        <div class="d-flex flex-column gap-3" id="pendingList"></div>
       </div>
     </main>
 
-    <div class="modal fade" id="appModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="appModalTitle">提示</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" id="appModalBody"></div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">知道了</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="js/teacher-review.js"></script>
   </body>
 </html>
