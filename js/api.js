@@ -20,6 +20,17 @@ export async function getPublishedMeetings() {
   return data ?? [];
 }
 
+export async function getManageMeetings() {
+  const supabase = getClient();
+  const { data, error } = await supabase
+    .from("meetings")
+    .select("*")
+    .order("date", { ascending: false });
+
+  if (error) throw error;
+  return data ?? [];
+}
+
 export async function getDiscussionMeetings() {
   const supabase = getClient();
   const { data, error } = await supabase
@@ -63,6 +74,32 @@ export async function createMeeting(meeting) {
   };
 
   const { data, error } = await supabase.from("meetings").insert(payload).select("*").single();
+  if (error) throw error;
+  return data;
+}
+
+export async function updateMeeting(id, meeting) {
+  const supabase = getClient();
+  const payload = {
+    title: meeting.title,
+    speaker: meeting.speaker,
+    speaker_role: meeting.speaker_role ?? null,
+    date: meeting.date,
+    description: meeting.description ?? null,
+    video_url: meeting.video_url ?? null,
+    ppt_url: meeting.ppt_url ?? null,
+    discussion_topic: meeting.discussion_topic ?? null,
+    submitter: meeting.submitter ?? null,
+    remark: meeting.remark ?? null,
+  };
+
+  const { data, error } = await supabase
+    .from("meetings")
+    .update(payload)
+    .eq("id", id)
+    .select("*")
+    .single();
+
   if (error) throw error;
   return data;
 }

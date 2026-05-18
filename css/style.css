@@ -10,6 +10,18 @@ body {
   max-width: var(--app-max-width);
 }
 
+.app-nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.4rem;
+}
+
+.app-nav .nav-link {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 .card-title {
   line-height: 1.3;
 }
